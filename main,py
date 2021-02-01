@@ -1,0 +1,46 @@
+import requests
+from bs4 import BeautifulSoup
+import warnings
+
+r = requests.get('https://www.worldometers.info/coronavirus')
+print(r.status_code)
+r.content
+
+soup = BeautifulSoup(r.content, 'lxml')
+print(soup.prettify())
+
+table = soup.find('table', attrs={'id': 'main_table_countries_today'})
+table
+
+rows = table.find_all("tr", attrs={"style": ""})
+
+r = []
+for i, item in enumerate(rows):
+
+    if i == 0:
+
+        r.append(item.text.strip().split("\n")[:13])
+
+    else:
+        r.append(item.text.strip().split("\n")[:12])
+
+r
+
+
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
+import pandas as pd
+import dask.dataframe as dd
+
+dt = pd.DataFrame(r)
+dt = pd.DataFrame(r[1:], columns=r[0][:12])
+
+df = dd.from_pandas(dt,npartitions=1)
+
+df.head()
+
+
+df.to_csv('data-*.csv')
+
+
+

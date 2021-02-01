@@ -4,14 +4,12 @@ import warnings
 
 r = requests.get('https://www.worldometers.info/coronavirus')
 print(r.status_code)
-r.content
 
 print( "Loading... harap bersabar")
 soup = BeautifulSoup(r.content, 'lxml')
 (soup.prettify())
 
 table = soup.find('table', attrs={'id': 'main_table_countries_today'})
-table
 
 rows = table.find_all("tr", attrs={"style": ""})
 
@@ -24,9 +22,6 @@ for i, item in enumerate(rows):
 
     else:
         r.append(item.text.strip().split("\n")[:12])
-
-r
-
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -43,4 +38,3 @@ df.head()
 
 df.to_csv('data-*.csv')
 
-print ("selesai, silakan cek file")

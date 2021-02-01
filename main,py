@@ -2,8 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import warnings
 
+print ('Realtime Data Covid19 Internasional')
+print ('By : Fadli Gunawan Rizqianto')
+
 r = requests.get('https://www.worldometers.info/coronavirus')
-print(r.status_code)
+print('status :', r.status_code, 'Ok')
 
 print( "Loading... harap bersabar")
 soup = BeautifulSoup(r.content, 'lxml')
@@ -25,6 +28,8 @@ for i, item in enumerate(rows):
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+print ('proses scraping...')
+
 import pandas as pd
 import dask.dataframe as dd
 
@@ -37,4 +42,7 @@ df.head()
 
 
 df.to_csv('data-*.csv')
+
+print ('Program selesai, file tersimpan dengan nama data-0.csv')
+
 

@@ -6,8 +6,9 @@ r = requests.get('https://www.worldometers.info/coronavirus')
 print(r.status_code)
 r.content
 
+print( "Loading... harap bersabar")
 soup = BeautifulSoup(r.content, 'lxml')
-print(soup.prettify())
+(soup.prettify())
 
 table = soup.find('table', attrs={'id': 'main_table_countries_today'})
 table
@@ -42,5 +43,4 @@ df.head()
 
 df.to_csv('data-*.csv')
 
-
-
+print ("selesai, silakan cek file")
